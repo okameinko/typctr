@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link href="base.css" rel="stylesheet" media="all">
+<title>開始時刻</title>
+</head>
+<body>
+<script>
+var i=0;
+function setEditEnable(boolEnable){ 
+  var elm = document.getElementsByName("go_watervolume").item(0);
+  var d;
+  if (boolEnable) {
+	d = 1;
+  } else {
+	d = -1
+  }
+  i = i + d;
+  if (i>0) {
+  	elm.disabled = false;
+  } else {
+  	elm.disabled = true;
+  }  
+} 
+</script>
+<h1 >水やり時刻</h1>
+<p align="center"> 水やりしたい時間を選んでください。複数選択が可能です </p>
+<form method="get" action="watervolume.html"> 
+<table align="center">
+<tr><td>
+<input type="checkbox" name="time" value="4" class="check_box" id="time4" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time4">4:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="5" class="check_box" id="time5" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time5">5:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="6" class="check_box" id="time6" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time6">6:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="7" class="check_box" id="time7" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time7">7:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="8" class="check_box" id="time8" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time8">8:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="9" class="check_box" id="time9" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time9">9:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="10" class="check_box" id="time10" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time10">10:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="11" class="check_box" id="time11" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time11">11:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="12" class="check_box" id="time12" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time12">12:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="13" class="check_box" id="time13" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time13">13:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="14" class="check_box" id="time14" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time14">14:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="15" class="check_box" id="time15" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time15">15:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="16" class="check_box" id="time16" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time16">16:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="17" class="check_box" id="time17" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time17">17:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="18" class="check_box" id="time18" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time18">18:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="19" class="check_box" id="time19" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time19">19:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="20" class="check_box" id="time20" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time20">20:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="21" class="check_box" id="time21" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time21">21:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="22" class="check_box" id="time22" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time22">22:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="23" class="check_box" id="time23" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time23">23:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="0" class="check_box" id="time0" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time0">0:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="1" class="check_box" id="time1" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time1">1:00</label>
+</tr></td>
+<tr><td>
+<input type="checkbox" name="time" value="2" class="check_box" id="time2" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time2">2:00</label>
+</td></tr>
+<tr><td>
+<input type="checkbox" name="time" value="3" class="check_box" id="time3" onclick="setEditEnable(this.checked)"/>
+<label class="label" for="time3">3:00</label>
+</td></tr>
+<tr>
+<td><input type="submit" name="go_watervolume" value="OK" class="btns" disabled="disabled"></td>
+</tr>
+</table>
+</form>
+</body>
+</html>
+

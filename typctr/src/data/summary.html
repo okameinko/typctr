@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link href="base.css" rel="stylesheet" media="all">
+<title>設定まとめ</title>
+</head>
+<body>
+<script>
+  function getTime(){
+	  var currrentDate = new Date();
+	  document.forms[0].elements["year"].value = currrentDate.getFullYear();
+	  document.forms[0].elements["month"].value = currrentDate.getMonth();
+	  document.forms[0].elements["date"].value = currrentDate.getDate();
+	  document.forms[0].elements["hours"].value = currrentDate.getHours();
+	  document.forms[0].elements["min"].value = currrentDate.getMinutes();
+	  document.forms[0].elements["sec"].value = currrentDate.getSeconds();
+  }
+</script>
+
+<h1 >設定まとめ</h1>
+<table class="summary_table" broder="1" bordercolor="#00ff00" rules="rows">
+<tr style="background-color:#ffffff" color="#00ff00"><td >
+動作モード</td><td><span id="mode" >%SERVE_MODE%</span>
+</td></tr>
+<tr  style="background-color:#ffffff"><td>
+動作時刻</td><td><span id="nextTime" >%SERVE_TIME%</span>
+</td></tr>
+<tr  style="background-color:#ffffff"><td>
+給水秒数</td><td><span id="nextTime">%WATER_VOLUME%</span>
+</td></tr>
+</table>
+<p>%RESULT%</p>
+<form  method="get" >
+<table align="center" width="100%">
+<tr><td colspan="2">
+<input type="hidden" name="year" value="yyyy" >
+<input type="hidden" name="month" value="mm" >
+<input type="hidden" name="date" value="dd" >
+<input type="hidden" name="hours" value="hh" >
+<input type="hidden" name="min" value="mm" >
+<input type="hidden" name="sec" value="ss" >
+<input type="submit" name="go_timer_start" value="タイマー動作開始" class="btns" onclick="getTime();" formaction="timer_start.html">
+</td></tr>
+<tr><td colspan="2">
+<input type="submit" name="go_top" value="はじめからやり直す" class="btns" formaction="top.html"></td>
+</tr>
+</table>
+</form>
+</body>
+</html>
+

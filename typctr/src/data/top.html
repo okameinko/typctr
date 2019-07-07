@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link href="base.css" rel="stylesheet" media="all">
+<title>水やり設定</title>
+</head>
+<body>
+<h1 >水やり設定</h1> 
+<table align="center">
+<tr><td>
+<form method="get" action="serve_time.html"> <input type="submit" name="go_everyday" value="毎日やる" class="btns"></form> 
+</td></tr>
+<tr><td>
+<form method="get" action="serve_interval.html"> <input type="submit" name="go_intermittent" value="数日おきにやる" class="btns"></form>
+</td></tr>
+<tr><td>
+<form method="get" action="top.html"> <input type="submit" name="go_voltage" value="電圧再測定" class="btns"></form>
+</td></tr>
+</table>
+<p>%RESULT%</p>
+</body>
+</html>
+

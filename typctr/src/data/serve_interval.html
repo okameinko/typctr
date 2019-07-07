@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link href="base.css" rel="stylesheet" media="all">
+<title>間欠動作</title>
+</head>
+<body>
+<script>
+var i=0;
+function setEditEnable(boolEnable){ 
+  var elm = document.getElementsByName("from_server_inteval").item(0);
+  var d;
+  if (boolEnable) {
+	d = 1;
+  } else {
+	d = -1
+  }
+  i = i + d;
+  if (i>0) {
+  	elm.disabled = false;
+  } else {
+  	elm.disabled = true;
+  }  
+} 
+</script>
+<h1 >水やり日の間隔</h1>
+<table align="center">
+<p align="center"> 水やり日の間隔を選んでください。 </p>
+<form method="get" action="serve_time.html">
+<tr><td>
+<input type="radio" name="interval" value="1" class="radio_box" id="interval1" onclick="setEditEnable(this.checked)"/>
+<label class="label2" for="interval1">2日に一回</label>
+</td></tr>
+<tr><td>
+<input type="radio" name="interval" value="2" class="radio_box" id="interval2" onclick="setEditEnable(this.checked)"/>
+<label class="label2" for="interval2">3日に一回</label>
+</td></tr>
+<tr><td>
+<input type="radio" name="interval" value="3" class="radio_box" id="interval3" onclick="setEditEnable(this.checked)"/>
+<label class="label2" for="interval3">4日に一回</label>
+</td></tr>
+<tr><td>
+<input type="radio" name="interval" value="4" class="radio_box" id="interval4" onclick="setEditEnable(this.checked)"/>
+<label class="label2" for="interval4">5日に一回</label>
+</td></tr>
+<tr><td>
+<input type="radio" name="interval" value="5" class="radio_box" id="interval5" onclick="setEditEnable(this.checked)"/>
+<label class="label2" for="interval5">6日に一回</label>
+</td></tr>
+<tr><td>
+<input type="radio" name="interval" value="6" class="radio_box" id="interval6" onclick="setEditEnable(this.checked)"/>
+<label class="label2" for="interval6">7日に一回</label>
+</td></tr>
+<tr><td>
+<input type="radio" name="interval" value="9" class="radio_box" id="interval7" onclick="setEditEnable(this.checked)"/>
+<label class="label2" for="interval7">10日に一回</label>
+</td></tr>
+<tr><td>
+<input type="radio" name="interval" value="13" class="radio_box" id="interval8" onclick="setEditEnable(this.checked)"/>
+<label class="label2" for="interval8">14日に一回</label>
+</td></tr>
+<tr><td>
+<input type="radio" name="interval" value="20" class="radio_box" id="interval9" onclick="setEditEnable(this.checked)"/>
+<label class="label2" for="interval9">21日に一回</label>
+</td></tr>
+<tr><td>
+<input type="radio" name="interval" value="29" class="radio_box" id="interval10" onclick="setEditEnable(this.checked)"/>
+<label class="label2" for="interval10">30日に一回</label>
+</td></tr>
+<tr>
+<td><input type="submit" name="from_server_inteval" value="OK" class="btns" disabled="disabled"></td>
+</tr>
+</form>
+</body>
+</html>

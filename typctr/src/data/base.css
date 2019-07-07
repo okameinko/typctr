@@ -1,0 +1,109 @@
+@charset "shift-jis";
+body{
+	background-color:#f0fff0;
+	-webkit-text-size-adjust:100%;
+}
+
+h1{
+	color:#6fbb9a;
+	text-align:center;
+	font-size: 600%;
+	max-height: 999999px;
+}
+
+p{
+	font-size: 400%;
+	max-height: 999999px;
+}
+
+span.second{
+	color:#6fbb9a;
+	text-align: center;
+	font-size: 200%;
+	max-height: 999999px;
+}
+
+table {
+	width: 100%;
+	font-size: 400%;
+	max-height: 999999px;
+}
+
+td {
+	text-align:center;
+	width:50%;
+	height;500%
+	max-height: 999999px;
+}
+
+.btns{
+	width: 100%;
+	text-align: center;
+	font-size: 150%;
+	font-weight: bold;
+	padding: 10px 0px;
+	background-color: #248;
+	color: #fff;
+	border-style: none;
+	-webkit-appearance: none;
+	/*
+	box-shadow: 2px 2px 3px 1px #6fbb9a;
+	-moz-box-shadow: 2px 2px 3px 1px #6fbb9a;
+	-webkit-box-shadow: 2px 2px 3px 1px #6fbb9a;
+	*/
+	max-height: 999999px;
+}
+.btns:hover{
+    /* 背景色を明るい青色に指定 */
+    background-color: #24d;
+    /* 文字色を白色に指定 */
+    color: #fff;
+}
+.btns:disabled{
+    /* 背景色を明るい灰色に指定 */
+    background-color: #808080;
+    /* 文字色を白色に指定 */
+    color: #fff;
+}
+
+label{
+  display: block;
+  font-size: 100%;
+  float: center;
+  margin:0 auto;
+  font-weight: bold;
+  width: 70%;	/* ラベルの横幅を指定する */
+  text-align:center;
+  border: 1px solid #808080;/* ラベルの境界線を実線で指定する */
+  border-radius: 5px;	/* 角丸を指定する */
+  background-color:#f0ffff
+  max-height: 999999px;
+}
+input[type=checkbox] {
+  display: none;
+  text-align:center;
+}
+input[type=checkbox].check_box:checked + .label {
+  background-color: #ffa07a;
+  text-align:center;
+}
+
+label2{
+  display: block;
+  float: center;
+  margin:0 auto;
+  width: 70%;	/* ラベルの横幅を指定する */
+  text-align:center;
+  border: 1px solid #808080;/* ラベルの境界線を実線で指定する */
+  border-radius: 5px;	/* 角丸を指定する */
+/*  background-color:#dcdcdc */
+  background-color:#fffacd
+	max-height: 999999px;
+}
+input[type=radio] {
+  display: none;
+}
+input[type=radio].radio_box:checked + .label2 {
+  background-color: #ffa07a;
+  text-align:center;
+}

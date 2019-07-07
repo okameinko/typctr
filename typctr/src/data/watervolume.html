@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link href="base.css" rel="stylesheet" media="all">
+<title>水量設定</title>
+<script src="jquery-3.4.1.min.js"></script>
+<script>
+  var start_time;
+  var elapsed_time;
+
+  function flg0(){
+      var time = Date.now();
+      document.form.elements["start"].disabled = true;
+      document.form.elements["stop"].disabled = false;
+      document.form.elements["send"].disabled = true;
+      start_time=time;
+      innerHTMLtxt.innerHTML="秒数計測中..";
+      $.ajax({
+          type:"GET",
+          url:"/start",
+          cache: false,
+          timeout: 5000
+        });
+  }
+  function flg1(){
+      var time = Date.now();
+      document.form.elements["start"].disabled = false;
+      document.form.elements["stop"].disabled = true;
+      document.form.elements["send"].disabled = false;
+      elapsed_time=time;
+      innerHTMLtxt.innerHTML=(elapsed_time-start_time)/1000+"秒";
+      document.form.elements["determined"].value = (elapsed_time-start_time)/1000 ;
+      document.form.elements["start"].value = "やり直し";      
+      $.ajax({
+          type:"GET",
+          url:"/stop",
+          cache: false,
+          timeout: 5000
+        });
+  }
+</script>
+</head>
+<body>
+<h1 >水の量</h1>
+<p align="center">スタートを押すと水が出ます。ちょうどいいところでストップを押してください。<br></p>
+<table align="center">
+<tr><td align="center">
+<span id="innerHTMLtxt" class="second">計測前</span><br>
+</td></tr>
+<form method="get" id="form" name="form">
+<tr><td>
+  <input type="button" id="start" name="start" value="スタート" class="btns" onClick="flg0();" >
+</td></tr>
+<tr><td> 
+  <input type="button" id="stop" name="stop" value="ストップ" class="btns" onClick="flg1();" disabled="disabled" >
+</td></tr>
+<tr><td>
+  <input type="hidden" id="determined" name="watervolume"  value="0" >
+  <input type="submit" id="send" name="submit"  value="OK" class="btns" formaction="summary.html" formmethod="get" disabled="disabled">
+</td></tr>
+</table>
+</form>
+</body>
+</html>
+
