@@ -10,34 +10,44 @@
   var elapsed_time;
 
   function flg0(){
-      var time = Date.now();
-      document.form.elements["start"].disabled = true;
-      document.form.elements["stop"].disabled = false;
-      document.form.elements["send"].disabled = true;
-      start_time=time;
-      innerHTMLtxt.innerHTML="秒数計測中..";
       $.ajax({
           type:"GET",
           url:"/start",
           cache: false,
-          timeout: 5000
-        });
+          timeout: 500
+      })
+      .done(function(){
+            var time = Date.now();
+            start_time=time;
+            document.form.elements["start"].disabled = true;
+            document.form.elements["stop"].disabled = false;
+            document.form.elements["send"].disabled = true;
+            innerHTMLtxt.innerHTML="秒数計測中..";
+      })
+      .fail (function( jqXHR, textStatus, errorThrown ) {
+          innerHTMLtxt.innerHTML=textStatus;
+      });
   }
   function flg1(){
-      var time = Date.now();
-      document.form.elements["start"].disabled = false;
-      document.form.elements["stop"].disabled = true;
-      document.form.elements["send"].disabled = false;
-      elapsed_time=time;
-      innerHTMLtxt.innerHTML=(elapsed_time-start_time)/1000+"秒";
-      document.form.elements["determined"].value = (elapsed_time-start_time)/1000 ;
-      document.form.elements["start"].value = "やり直し";      
       $.ajax({
           type:"GET",
           url:"/stop",
           cache: false,
-          timeout: 5000
-        });
+          timeout: 500
+      })
+      .done(function(){
+          var time = Date.now();
+          document.form.elements["start"].disabled = false;
+          document.form.elements["stop"].disabled = true;
+          document.form.elements["send"].disabled = false;
+          elapsed_time=time;
+          innerHTMLtxt.innerHTML=(elapsed_time-start_time)/1000+"秒";
+          document.form.elements["determined"].value = (elapsed_time-start_time)/1000 ;
+          document.form.elements["start"].value = "やり直し";
+      })
+      .fail(function( jqXHR, textStatus, errorThrown ) {
+          innerHTMLtxt.innerHTML=textStatus;
+      });
   }
 </script>
 </head>

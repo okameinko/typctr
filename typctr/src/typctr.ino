@@ -6,6 +6,7 @@
 #include <rom/rtc.h>
 #include "esp32/ulp.h"
 #include "driver/rtc_io.h"
+#define CALIBRATE_ONE(cali_clk) calibrate_one(cali_clk, #cali_clk)
 
 // 動作確認用点滅LEDピン
 #define HEART_BEAT_PIN1   2
@@ -62,6 +63,20 @@ volatile boolean timer_go = false;
 //---------------------------------------------------------------------------------
 //                               関数定義
 //---------------------------------------------------------------------------------
+static uint32_t calibrate_one(rtc_cal_sel_t cal_clk, const char *name)
+{
+    const uint32_t cal_count = 1000;
+    const float factor = (1 << 19) * 1000.0f;
+    uint32_t cali_val;
+    printf("%s:\n", name);
+    for (int i = 0; i < 5; ++i)
+    {
+        printf("calibrate (%d): ", i);
+        cali_val = rtc_clk_cal(cal_clk, cal_count);
+        printf("%.3f kHz\n", factor / (float)cali_val);
+    }
+    return cali_val;
+}
 //---------------------------------------------------------------------------------
 //                            割込み時関数定義
 //---------------------------------------------------------------------------------
@@ -199,7 +214,7 @@ void setup_pwm() {
 // 電源電圧の読みとり
 //-----------------
 double ReadVoltage(){
-  const int nmx=5;
+  const int nmx=50;
   double cnt=0.0;
   double reading,sx=0;
   int i;
@@ -246,7 +261,7 @@ String processor(const String& var)
   if(var == "VOLT"){
     voltage = ReadVoltage()/2.0;
     message="電池一本あたりの電圧は" + String(voltage) + "Vです";
-    return String(message);
+    return message;
   }
   if(var == "RESULT"){
       voltage = ReadVoltage()/2.0;
@@ -254,10 +269,10 @@ String processor(const String& var)
         message="電圧は十分です。電池交換の必要はありません。(電池一本あたりの電圧測定結果は" + String(voltage) + "Vでした）";
       } else if (voltage<1.1)  { 
         message="<strong>新しい電池への交換をおすすめします</strong>（電池一本あたりの電圧測定結果は<mark>" + String(voltage) + "V</mark>でした）";
-      } else if (voltage<1.3) {
+      } else {
         message="<strong>乾電池をお使いの場合には、新しい電池への交換をおすすめします。</strong>※ 充電式電池をお使いの場合には、交換の必要はありません。（電池一本あたりの電圧測定結果は<mark>" + String(voltage) + "V</mark>でした）";
       }
-      return String(message);
+      return message;
   }
   if(var == "SERVE_MODE"){
     if        (serve_interval==0)  {serve_mode_string="毎日      ";
@@ -281,7 +296,7 @@ String processor(const String& var)
     return serve_time_string;
   }
   if(var == "WATER_VOLUME"){
-    return String(serve_volume)+"秒@"+String(serve_voltage/2.0)+"V/cell";
+    return String(serve_volume)+"秒@"+String(serve_voltage/2.0)+"V/セル";
   }
   if(var == "NEXT_TIME"){
     return String(waitCounts/(60.0*60.0))+"時間後の"+next_serve_time+":00";
@@ -353,9 +368,28 @@ void setup(){
   pinMode(BASE_POWER_PIN,OUTPUT);
 
 // RTCキャリブレーション
+/* 32kクリスタルが使える場合。ただし、ツールチェーンのリコンパイル必要
+  rtc_clk_32k_bootstrap(512);
+  rtc_clk_32k_bootstrap(512);
+  rtc_clk_32k_enable(true);
+  uint32_t cal_32k = CALIBRATE_ONE(RTC_CAL_32K_XTAL);
+  rtc_clk_slow_freq_set(RTC_SLOW_FREQ_32K_XTAL);
+  if (cal_32k == 0)
+  {
+    printf("32K XTAL OSC has not started up");
+  }
+   else
+  {
+    printf("done\n");
+  }
+  if (rtc_clk_32k_enabled())
+  {
+    Serial.println("OSC Enabled");
+  }
   const uint32_t cal_count = 1000;
   const float factor = (1 << 19) * 1000.0f;
   uint32_t cali_val;
+  */
   printf("calibrate");
   cali_val = rtc_clk_cal(RTC_CAL_RTC_MUX, cal_count);
   printf("%.3f kHz\n", factor / (float)cali_val);
@@ -512,11 +546,7 @@ void setup(){
         }
     }
     // 次回実行時刻の算出
-/*    Serial.print("current time");
-    Serial.println(hours);*/
     next_serve_time_index=0;      
-/*    Serial.print("serve_time");
-    Serial.println(serve_time[0]);*/
     next_serve_time_index=0;      
     for(int i=0;i<serve_times;i++){
       if(serve_time[i]>hours){
@@ -568,22 +598,11 @@ void loop(){
   long sleepCount;
   long last_msec;
   Serial.println("Wakeup!"); 
-/*    for(int i=0;i<serve_times;i++){
-      Serial.print("i=");
-      Serial.println(i);
-      Serial.print("serve_time[i]=");    
-      Serial.println(serve_time[i]);    
-    }
-  Serial.print("bootCount:");
-  Serial.println(bootCount); */
   // 作動時刻になったかどうか判定する
   if(bootCount >= waitCounts){
-/*    Serial.print("★serve_time has come!:");
-    Serial.println(next_serve_time); */
     // 次回作動時刻の設定
     current_time=next_serve_time;
     if (next_serve_time_index == serve_times - 1) { // 翌日以降の場合
-/*      Serial.println("★next serve time is beyond 24:00 !");*/
       next_serve_time_index=0;        
       next_serve_time=serve_time[0];
       waitCounts=24*60*60 +
@@ -591,18 +610,11 @@ void loop(){
                  (long)next_serve_time*60*60 - 
                  (long)current_time*60*60;
     } else { // 当日中の場合
-/*      Serial.println("★next serve time is brefore 24:00 !");*/
       next_serve_time_index++;
       next_serve_time=serve_time[next_serve_time_index];
       waitCounts=(long)next_serve_time*60*60 - 
                  (long)current_time*60*60;
     }
-/*    Serial.print("★next_serve_time_index:");
-    Serial.println(next_serve_time_index); 
-    Serial.print("★next_serve_time:");
-    Serial.println(next_serve_time); 
-    Serial.print("★Start serving.. waitCounts: ");
-    Serial.println(waitCounts);*/
     // 点滅中止
     ULP_BLINK_STOP();
     // 給水実施
@@ -630,14 +642,6 @@ void loop(){
     sleepCount = ( sleep_Sec*1000 - _1msecCounterAtWakeUp ) * (long)uS_TO_mS_FACTOR;
     bootCount=bootCount+sleep_Sec;
   }
-/*  Serial.print("★ bootCount:");
-  Serial.println(bootCount); 
-  Serial.print(" waitCounts:");
-  Serial.println(waitCounts); 
-  Serial.print(" sleepCount:");
-  Serial.println(sleepCount); 
-  Serial.print(" _1msecCounterAtWakeUp:");
-  Serial.println(_1msecCounterAtWakeUp); */
   // Deep sleep にはいる
 /*  Serial.println("enable sleep..."); */
   esp_sleep_enable_timer_wakeup(sleepCount);
